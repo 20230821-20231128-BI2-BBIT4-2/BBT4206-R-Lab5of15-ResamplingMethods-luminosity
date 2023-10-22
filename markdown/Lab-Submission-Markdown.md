@@ -1,53 +1,103 @@
----
-title: "Business Intelligence Project"
-author: "<Specify your name here>"
-date: "<Specify the date when you submitted the lab>"
-output:
-  github_document: 
-    toc: yes
-    toc_depth: 4
-    fig_width: 6
-    fig_height: 4
-    df_print: default
-editor_options:
-  chunk_output_type: console
----
+Business Intelligence Project
+================
+<Specify your name here>
+<Specify the date when you submitted the lab>
 
+- [Business Intelligence Lab Submission
+  Markdown](#business-intelligence-lab-submission-markdown)
+- [Student Details](#student-details)
+- [Setup Chunk](#setup-chunk)
+- [Step 1: Install and Load Packages](#step-1-install-and-load-packages)
+- [Step 2: Load Dataset](#step-2-load-dataset)
+- [Step 3: Using Naives Bayes](#step-3-using-naives-bayes)
+  - [Splitting the dataset](#splitting-the-dataset)
+  - [Testing the trained Naive Bayes
+    model](#testing-the-trained-naive-bayes-model)
+  - [Printing Results](#printing-results)
+  - [Confusion Matrix](#confusion-matrix)
+- [Step 4: Using Bootstrapping](#step-4-using-bootstrapping)
+  - [Load the dataset](#load-the-dataset)
+  - [Split and train the dataset](#split-and-train-the-dataset)
+  - [Training a logistic regression
+    model](#training-a-logistic-regression-model)
+  - [Test the Model](#test-the-model)
+  - [View accuracy and the predicted
+    valies](#view-accuracy-and-the-predicted-valies)
+  - [Predict output on unseen data and print
+    output](#predict-output-on-unseen-data-and-print-output)
+- [Step 5: Using Cross Validation](#step-5-using-cross-validation)
+  - [Load the dataset](#load-the-dataset-1)
+  - [Split and train the dataset](#split-and-train-the-dataset-1)
+  - [Training using 10-fold cross validation and testing the trained
+    linear
+    model](#training-using-10-fold-cross-validation-and-testing-the-trained-linear-model)
+  - [View accuracy and the predicted
+    valies](#view-accuracy-and-the-predicted-valies-1)
+  - [LDA Classifier based on 5-fold cross
+    validation](#lda-classifier-based-on-5-fold-cross-validation)
+  - [Testing the trained LDA Model](#testing-the-trained-lda-model)
+  - [Summary of the model](#summary-of-the-model)
+  - [Confusion Matrix](#confusion-matrix-1)
+  - [Classification: SVM with Repeated k-fold Cross
+    Validation](#classification-svm-with-repeated-k-fold-cross-validation)
+  - [Classification: Naive Bayes with Leave One Out Cross
+    Validation](#classification-naive-bayes-with-leave-one-out-cross-validation)
 
 # Business Intelligence Lab Submission Markdown
 
+# Student Details
 
+<table style="width:99%;">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 38%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Student ID Numbers and Names of Group Members</strong></td>
+<td><div class="line-block">1. 134982 - A - Austin Waswa</div>
+<div class="line-block">2. 100230 - A - Richard Maana</div>
+<div class="line-block">3. 134564 - A - Cynthia Omusundi</div></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>GitHub Classroom Group Name</strong></td>
+<td>Luminosity</td>
+</tr>
+<tr class="odd">
+<td><strong>Course Code</strong></td>
+<td>BBT4206</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Course Name</strong></td>
+<td>Business Intelligence II</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Program</strong></td>
+<td>Bachelor of Business Information Technology</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Semester Duration</strong></td>
+<td>21<sup>st</sup> August 2023 to 28<sup>th</sup> November 2023</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
-# Student Details {#student-details}
+# Setup Chunk
 
-+---------------------------------------------------+---------------------------------------------+--------------------+
-| **Student ID Numbers and Names of Group Members** | | 1. 134982 - A - Austin Waswa              |                    |
-|                                                   |                                             |                    |
-|                                                   | | 2. 100230 - A - Richard Maana             |                    |
-|                                                   |                                             |                    |
-|                                                   | | 3. 134564 - A - Cynthia Omusundi          |                    |
-|                                                   |                                             |                    |
-|                                                   |                                             |                    |
-|                                                   |                                             |                    |
-|                                                   |                                             |                    |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-|                                                   | **GitHub Classroom Group Name**             | Luminosity         |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-| **Course Code**                                   | BBT4206                                     |                    |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-| **Course Name**                                   | Business Intelligence II                    |                    |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-| **Program**                                       | Bachelor of Business Information Technology |                    |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-| **Semester Duration**                             | 21^st^ August 2023 to 28^th^ November 2023  |                    |
-+---------------------------------------------------+---------------------------------------------+--------------------+
-
-# Setup Chunk {#setup-chunk}
-
-**Note:** the following "*KnitR*" options have been set as the defaults in this markdown:\
+**Note:** the following “*KnitR*” options have been set as the defaults
+in this markdown:  
 `knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE, collapse = FALSE, tidy.opts = list(width.cutoff = 80), tidy = TRUE)`.
 
-More KnitR options are documented here <https://bookdown.org/yihui/rmarkdown-cookbook/chunk-options.html> and here <https://yihui.org/knitr/options/>.
+More KnitR options are documented here
+<https://bookdown.org/yihui/rmarkdown-cookbook/chunk-options.html> and
+here <https://yihui.org/knitr/options/>.
 
 ``` r
 knitr::opts_chunk$set(
@@ -61,18 +111,19 @@ knitr::opts_chunk$set(
 
 ------------------------------------------------------------------------
 
-**Note:** the following "*R Markdown*" options have been set as the defaults in this markdown:
+**Note:** the following “*R Markdown*” options have been set as the
+defaults in this markdown:
 
 > output:
 >
-> github_document:\
-> toc: yes\
-> toc_depth: 4\
-> fig_width: 6\
-> fig_height: 4\
+> github_document:  
+> toc: yes  
+> toc_depth: 4  
+> fig_width: 6  
+> fig_height: 4  
 > df_print: default
 >
-> editor_options:\
+> editor_options:  
 > chunk_output_type: console
 
 # Step 1: Install and Load Packages
@@ -140,7 +191,7 @@ if (require("naivebayes")) {
   
 ```
 
-# Step 2: Load Dataset 
+# Step 2: Load Dataset
 
 ``` r
   PimaIndiansDiabetes <-
